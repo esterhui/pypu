@@ -12,11 +12,13 @@ Example Usage
 First let's use 'pu' to call pushercli.py (put this in ~/.bashrc)
 
 ::
-    alias pu='$HOME/pushercli.py'
+
+    alias pu='$HOME/src/pusher/pushercli.py'
 
 Now, let's say you want to add a few photos to flickr:
 
 ::
+
     > cd samples/
     > ls 
     location.txt  megapixels.txt  sets.txt  sl.jpg  sl2.jpg  tags.txt
@@ -26,6 +28,7 @@ data. Pusher will only add files to the repository that it knowns how to handle,
 let's try adding this whole directory
 
 ::
+
     > pu -sflickr add *
     A location.txt (flickr[A])
     A megapixels.txt (flickr[A])
@@ -44,6 +47,7 @@ your flickr username or whatnot.
 Now, let's actually push this stuff to flickr (upload to flickr):
 
 ::
+
     > pu push .
     sl.jpg - Uploading to flickr, tags["slow loris" "funny animal" "test"] size=0.5 MP
     sl2.jpg - Uploading to flickr, tags["slow loris" "funny animal" "test"] size=0.5 MP
@@ -65,6 +69,7 @@ sets' the jpegs belong to, geotagging information (if no lat/lon in EXIF).
 The current sets.txt looks like this:
 
 ::
+
     > cat sets.txt
     Slow loris album, test album
 
@@ -72,6 +77,7 @@ We actually don't want it in the test album, so let's modify sets.txt to look
 like this:
 
 ::
+
     > cat sets.txt
     Slow loris album
 
@@ -79,6 +85,7 @@ Now, if you ask pusher to look at the status of the files, it will notice the
 md5 checksum of the file has changed (as well as the modification time):
 
 ::
+
     > pu st .
     S location.txt (flickr[S])
     S megapixels.txt (flickr[S])
@@ -91,6 +98,7 @@ Notice how sets.txt has a 'M' flag, indicating it has been modified and needs to
 be re-synchronized. Tell pusher to update photo albums (sets):
 
 ::
+
     > pu push .
     sets.txt - Updating sets
     S sets.txt (flickr[S])
