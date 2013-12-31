@@ -220,6 +220,13 @@ Flickr album on google maps
 
 Use *build_json_from_flickr.py* to generate maps like http://gps.pythion.com
 
+TIPS
+=====
+
+- To rename all files by exif date, use exiv2 utility::
+    exiv2 rename *.JPG
+
+
 
 TODO
 =====
@@ -228,3 +235,7 @@ TODO
     - Add wordpress documentation
     - Read flickr user name from config file
     - Explain how scripts/build_json_from_flickr.py works 
+    - Add feh screenshot with pusher overlay
+    - Add something like *pu flickr init* to generate skeleton metadata files
+    - Document how to add new services
+
