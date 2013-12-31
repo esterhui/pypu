@@ -13,6 +13,27 @@ remote server, where this 'server' is facebook, flickr, wordpress.
 This software can be interfaced easily with an image program like 'feh' to
 graphically add photos to flickr/facebook.
 
+Install
+=======
+
+Easiest is to do a pip install::
+
+    pip install pypu
+
+Make sure to setup an alias to the cli utility using some version of python2::
+
+    alias pu="python2 /usr/lib/python2.7/site-packages/pypu/pushercli.py"
+
+Another method is to download the source and setup an alias::
+
+    alias pu='$HOME/src/pypu/pushercli.py'
+
+
+Website
+=======
+
+http://github.com/esterhui/pypu
+
 Example Usage - Adding an album
 ===============================
 
