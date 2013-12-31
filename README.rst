@@ -154,6 +154,7 @@ Supported services
 ==================
 
 Currently this script supports uploading/deleting stuff via:
+
 - Facebook (fb)
 - Flickr (flickr)
 - Wordpress (wp)
@@ -205,9 +206,9 @@ Feh allows one to run scripts on the current image being viewed (like adding the
 
 Now one can browse images with 'f \*.jpg' and use:
 
-    - **Enter** : To add a picture to flickr and facebook
-    - **1** : To add a title to the image
-    - **4** : To remove image from services
+- **Enter** : To add a picture to flickr and facebook
+- **1** : To add a title to the image
+- **4** : To remove image from services
 
 Make sure scripts/image-pusher.sh is in the search path. The very 
 bottom line in feh also shows the current status of the file as viewed
@@ -228,19 +229,19 @@ Use *build_json_from_flickr.py* to generate maps like http://gps.pythion.com
 TIPS
 =====
 
-    - To rename all files by exif date, use exiv2 utility::
-        exiv2 rename *.JPG
+- To rename all files by exif date, use exiv2 utility::
+
+    exiv2 rename *.JPG
 
 
 TODO
 =====
 
-    - Add command to print supported services
-    - Add wordpress documentation
-    - Read flickr user name from config file
-    - Explain how scripts/build_json_from_flickr.py works 
-    - Add feh screenshot with pusher overlay
-    - Add something like *pu flickr init* to generate skeleton metadata files
-    - Document how to add new services
-    - Add Installation section
-
+- Add command to print supported services
+- Add wordpress documentation
+- Read flickr user name from config file
+- Explain how scripts/build_json_from_flickr.py works 
+- Add feh screenshot with pusher overlay
+- Add something like *pu flickr init* to generate skeleton metadata files
+- Document how to add new services
+- Add Installation section
