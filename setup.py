@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='pypu',
-    version='0.1.1',
+    version='0.1.2',
     packages=['pypu',],
     author='Stephan Esterhuizen',
     author_email='esterhui@gmail.com',

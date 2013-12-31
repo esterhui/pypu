@@ -43,8 +43,7 @@ first time a facebook or flickr login is required, the script will open a tab in
 your browser, and interact with either facebook or flickr to grant this
 premission. 
 
-- Facebook grants a 2 month token, thus this process only needs to be
-performed every two months
+- Facebook grants a 2 month token, thus this process only needs to be performed every two months
 - Flickr grants a authorization token until it is revoked by the user
 
 Example Usage - Adding an album
