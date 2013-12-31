@@ -6,8 +6,8 @@ This command line interface (CLI) tool provides an easy way to manage photo
 albums and wordpress blogs via the command line. It currently has interface to
 flickr, facebook, and wordpress.
 
-Example Usage
-=============
+Example Usage - Adding an album
+===============================
 
 First let's use 'pu' to call pushercli.py (put this in ~/.bashrc)
 
@@ -108,3 +108,72 @@ can be modified in this fashion and pusher will correctly handle the change of
 meta data.
 
 
+Example Usage - Deleting album
+===============================
+
+Ok, let's clean up this test album. Do this by removing all files from pusher.
+
+::
+
+    > pu rm *
+    D location.txt (flickr[D])
+    D megapixels.txt (flickr[D])
+    D sets.txt (flickr[D])
+    D sl.jpg (flickr[D])
+    D sl2.jpg (flickr[D])
+    D tags.txt (flickr[D])
+
+This instructs pusher to issue a delete action to all services managing the
+ files.  In this current setup this will ask flickr to remove these files.
+
+Now issue a push command to actually apply the action:
+
+::
+    
+    > pu push .
+    sl.jpg - Deleting from flickr [local copy intact]
+    sl2.jpg - Deleting from flickr [local copy intact]
+    ? location.txt
+    ? megapixels.txt
+    ? sets.txt
+    ? sl.jpg
+    ? sl2.jpg
+    ? tags.txt
+
+Notice how the two jpeg files have been removed from the flickr 
+album as well as all meta files.
+
+Supported services
+==================
+
+Currently this script supports uploading/deleting stuff via:
+- Facebook (fb)
+- Flickr (flickr)
+- Wordpress (wp)
+
+Config files
+============
+
+location.txt [flickr]
+    The location of the all media files in this directory. This location is 
+    only used when jpg file has no GPS data in the EXIF. Location is a string
+    you would type into google maps eg:: 
+        Holcomb Valley Campground, California
+    
+megapixels.txt [flickr] megapixels_fb [fb]
+    The megapixels files (megapixel.txt for flickr and megapixel_fb.txt 
+    for facebook) is used to resize images to the specified megapixels.
+    If the image is smaller than the specified megapixels, original image
+    size will be used. To resize to 2.0 megapixels, this file will contain::
+        2.0
+
+sets.txt [flickr,fb]
+    Only the first line is read, it's a comma separated list of photo 
+    sets the photos belong to. For flickr one photo can belong to many photo sets,
+    for facebook, only the first set is used as the facebook album name. Here is
+    an example of two photo sets::
+        South Africa, travel
+        
+tags.txt [flickr]
+    Flickr supports adding text tags to photos. This file should contain a
+    comma separated list of tags to apply to all photos in this directory. 
