@@ -199,7 +199,8 @@ tags.txt [flickr]
 feh interfacing
 ===============
 
-More to come soon. In .bashrc put this::
+Feh allows one to run scripts on the current image being viewed (like adding the image to flickr), and even read data from stdin to display on the image. We can take advantage of this to seamlessly integrate feh and pusher::
+
     alias f='feh -B black --draw-tinted --draw-exif -G -P -Z -g 1366x768 -d -S filename --info "image-pusher.sh show %F" --action "pu add %F" --action4 "pu rm %F" --action1 ";image-pusher.sh edit-title %F"'
 
 Now one can browse images with 'f \*.jpg' and use:
@@ -215,6 +216,10 @@ by pusher. Eg, you will see text on the image::
 
 This indicates this image will be added to both flickr and facebook. Remember to do a pu push sl.jpg to actually sync this image with services.
 
+Here is an example screenshot:
+
+.. image:: docs/feh_pusher.png
+
 Flickr album on google maps
 ===========================
 
@@ -223,9 +228,8 @@ Use *build_json_from_flickr.py* to generate maps like http://gps.pythion.com
 TIPS
 =====
 
-- To rename all files by exif date, use exiv2 utility::
-    exiv2 rename *.JPG
-
+    - To rename all files by exif date, use exiv2 utility::
+        exiv2 rename *.JPG
 
 
 TODO
@@ -238,4 +242,5 @@ TODO
     - Add feh screenshot with pusher overlay
     - Add something like *pu flickr init* to generate skeleton metadata files
     - Document how to add new services
+    - Add Installation section
 
