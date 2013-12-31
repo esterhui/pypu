@@ -218,10 +218,7 @@ This indicates this image will be added to both flickr and facebook. Remember to
 Flickr album on google maps
 ===========================
 
-Use *build_json_from_flickr.py* to generate maps like `gps.pythion.com`_
-
-.. _gps.pytion.com: http://gps.pythion.com
-
+Use *build_json_from_flickr.py* to generate maps like http://gps.pythion.com
 
 
 TODO
