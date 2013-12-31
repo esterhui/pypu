@@ -61,20 +61,27 @@ class status:
                 filedict[fn]['status']=self._computeStatus(db[fn],service)
                 # Only Set the modify flag if the current
                 # file was actually synched in the first place
-                if filedict[fn]['mtime'] > db[fn]['mtime']\
-                    and db[fn]['status']==self.ST_UPTODATE:
+                if filedict[fn]['mtime'] > db[fn]['mtime']:
                     # Compute a new hash
                     newhash=self._hashfile(os.path.join(directory,fn))
-                    # Only if the hash changed do we update
-                    if newhash!=db[fn]['hash']:
-                        filedict[fn]['status']=self.ST_MODIFIED
-                    else:
-                        # Hash didn't change, let's update the mtime
-                        # so we don't have to hash again
-                        db[fn]['mtime']=filedict[fn]['mtime']
-                        self._saveDB(directory,db)
+                    for srv in db[fn]['services']:
+                        if db[fn]['services'][srv]['status']\
+                                ==self.ST_UPTODATE:
+                            # Only if the hash changed do we update
+                            if newhash!=db[fn]['hash']:
+                                filedict[fn]['status']=self.ST_MODIFIED
+                                db[fn]['services'][srv]['status']\
+                                        =self.ST_MODIFIED
+                            else:
+                                # Hash didn't change, let's update the mtime
+                                # so we don't have to hash again
+                                db[fn]['mtime']=filedict[fn]['mtime']
+                                self._saveDB(directory,db)
+                # Recompute since status might have changed
+                filedict[fn]['status']=self._computeStatus(db[fn],service)
             else:
                 filedict[fn]['status']=self.ST_UNTRACKED
+
 
         return filedict,db
 
@@ -146,8 +153,21 @@ class status:
             else:
                 logger.debug("%s - Skipping, does not exist"%(fn))
 
-        # FIXME: Should sort here by EXIF creation date instead of filename
         files_that_exist.sort()
+
+        # FIXME: This is bad, but flickr needs to upload
+        # media files first, then meta data files. Here
+        # we ensure this happens
+        if service is None or service is 'flickr':
+            sobj=self.sman.GetServiceObj('flickr')
+            files_hack=[]
+            for filename in files_that_exist:
+                if sobj._isMediaFile(filename):
+                    files_hack.append(filename)
+            for filename in files_that_exist:
+                if sobj._isConfigFile(filename):
+                    files_hack.append(filename)
+            files_that_exist=files_hack
 
         for fn in files_that_exist:
             if status==self.ST_ADDED:
@@ -338,6 +358,7 @@ class status:
             # Since this is a new entry, populate with stuff
             # we got from GetSatus for this file (usually mtime)
             db[fn]=dentry
+            del db[fn]['status'] # Delete this key we're not using
             db[fn]['services']={} # Empty dictionary of services
                                   # that manages this file + status
 

@@ -119,12 +119,16 @@ class service_flickr:
         basefilename=os.path.splitext(filename)[0]
         ext=os.path.splitext(filename)[1].lower()
         if filename==LOCATION_FILE:
+            print("%s - Updating geotag information"%(LOCATION_FILE))
             return self._update_config_location(directory)
         elif filename==TAG_FILE:
+            print("%s - Updating tags"%(TAG_FILE))
             return self._update_config_tags(directory)
         elif filename==SET_FILE:
+            print("%s - Updating sets"%(SET_FILE))
             return self._update_config_sets(directory)
         elif filename==MEGAPIXEL_FILE:
+            print("%s - Updating photo size"%(MEGAPIXEL_FILE))
             return self._upload_media(directory,resize_request=True)
         elif ext in self.FLICKR_META_EXTENSIONS:
             return self._update_meta(directory,basefilename)
@@ -258,8 +262,6 @@ class service_flickr:
         if not self._connectToFlickr():
             print("%s - Couldn't connect to flickr"%(directory))
             return False
-
-        logger.debug("Updating sets in %s"%(directory))
 
         # Load sets from SET_FILE
         _sets=self._load_sets(directory)
@@ -514,6 +516,7 @@ class service_flickr:
             print("%s - Couldn't connect to flickr"%(filename))
             return False
 
+
         # --- Read location out of file
         fullfile=os.path.join(directory,LOCATION_FILE)
         try:
@@ -613,10 +616,6 @@ class service_flickr:
         _tags=self._load_tags(directory)
         _megapixels=self._load_megapixels(directory)
 
-        if not _megapixels:
-            mpstring="original"
-        else:
-            mpstring=("%0.1f MP"%(_megapixels))
 
         # If no files given, use files from DB in dir
         if not files:
@@ -633,7 +632,6 @@ class service_flickr:
             #FIXME: If this fails, should send a list
             # to Upload() about which files DID make it,
             # so we don't have to upload it again!
-            print("%s - Uploading to flickr, tags[%s] size=%s"%(filename,_tags,mpstring))
 
             status,replaced=self._upload_or_replace_flickr(directory,filename, \
                     _tags, _megapixels,resize_request)
@@ -661,6 +659,11 @@ class service_flickr:
 
         status=False
         replaced=False
+
+        if not _megapixels:
+            mpstring="original"
+        else:
+            mpstring=("%0.1f MP"%(_megapixels))
 
         # If resize request, make tempfile and
         # resize.
@@ -692,6 +695,9 @@ class service_flickr:
                             %(fullfile))
 
             logger.debug("Upload %s to flickr, tags=%s",fn,_tags)
+
+            print("%s - Uploading to flickr, tags[%s] size=%s"\
+                    %(fn,_tags,mpstring))
 
             # Do the actual upload
             uplxml=self.flickr.upload(filename=fullfile,\
@@ -738,7 +744,6 @@ class service_flickr:
                     logger.warning("%s couldn't resize, uploading original"\
                             %(fullfile))
                     
-
             logger.info("%s - Replace on flickr pid=%s",fn,pid)
             uplxml=self.flickr.replace(filename=fullfile,photo_id=pid)
             if uplxml.attrib['stat']!='ok':
@@ -765,6 +770,9 @@ class service_flickr:
         new_width,new_height=pusher_utils.resize_compute_width_height(\
                 fn,_megapixels)
         if width_flickr==new_width and height_flickr==new_height:
+            return True
+        # Also return true if image couldn't be resized
+        elif not new_width:
             return True
         return False
 

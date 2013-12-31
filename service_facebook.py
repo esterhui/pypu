@@ -27,7 +27,7 @@ class service_facebook:
 
     def __init__(self):
         self.name="fb"
-        self.FB_CONFIG_FILES=[LOCATION_FILE,SET_FILE,MEGAPIXEL_FILE]
+        self.FB_CONFIG_FILES=[SET_FILE,MEGAPIXEL_FILE]
         self.FB_META_EXTENSIONS=['.title']
         # All MEDIA_EXTENSIONS will be uploaded to fb
         self.FB_MEDIA_EXTENSIONS=['.jpg','.mov','.avi','.mp4']
