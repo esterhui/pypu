@@ -203,9 +203,10 @@ More to come soon. In .bashrc put this::
     alias f='feh -B black --draw-tinted --draw-exif -G -P -Z -g 1366x768 -d -S filename --info "image-pusher.sh show %F" --action "pu add %F" --action4 "pu rm %F" --action1 ";image-pusher.sh edit-title %F"'
 
 Now one can browse images with 'f \*.jpg' and use:
-- **Enter** : To add a picture to flickr and facebook
-- **1** : To add a title to the image
-- **4** : To remove image from services
+
+    - **Enter** : To add a picture to flickr and facebook
+    - **1** : To add a title to the image
+    - **4** : To remove image from services
 
 Make sure scripts/image-pusher.sh is in the search path. The very 
 bottom line in feh also shows the current status of the file as viewed
@@ -213,3 +214,20 @@ by pusher. Eg, you will see text on the image::
     A sl.jpg (fb[A] flickr[A])
 
 This indicates this image will be added to both flickr and facebook. Remember to do a pu push sl.jpg to actually sync this image with services.
+
+Flickr album on google maps
+===========================
+
+Use *build_json_from_flickr.py* to generate maps like gps.pythion.com_
+
+.. _gps.pytion.com: http://gps.pythion.com
+
+
+
+TODO
+=====
+
+    - Add command to print supported services
+    - Add wordpress documentation
+    - Read flickr user name from config file
+    - Explain how scripts/build_json_from_flickr.py works 

@@ -15,7 +15,7 @@ parser.add_argument('-vv','--debug',help="Very Verbose debug output",\
         action="store_true")
 parser.add_argument('-f','--force',help="Attempts to force operation",\
         action="store_true")
-parser.add_argument('-s',help="Action only applies to given service (by default all services attempt to apply action)",\
+parser.add_argument('-s',help="Action only applies to given service (by default all services attempt to apply action). Use '<progname> services print' to print all supported services",\
         action="store",dest="service")
 
 logger=logging.getLogger('pusher')
@@ -60,6 +60,9 @@ def main():
         status.UpdateStatus(directory,files,status.ST_UPTODATE,service)
     elif args.action=='rm':
         status.UpdateStatus(directory,files,status.ST_DELETED,service)
+    elif args.action=='services':
+        status.sman.PrintServices()
+        
 
 if __name__ == '__main__':
     main()
