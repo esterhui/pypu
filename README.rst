@@ -6,6 +6,13 @@ This command line interface (CLI) tool provides an easy way to manage photo
 albums and wordpress blogs via the command line. It currently has interface to
 flickr, facebook, and wordpress.
 
+The philosophy is to make this software similar to svn or git, where one 
+adds/removes media files locally, then does a 'push' to synchronize with 
+remote server, where this 'server' is facebook, flickr, wordpress.
+
+This software can be interfaced easily with an image program like 'feh' to
+graphically add photos to flickr/facebook.
+
 Example Usage - Adding an album
 ===============================
 
@@ -159,6 +166,10 @@ location.txt [flickr]
     only used when jpg file has no GPS data in the EXIF. Location is a string
     you would type into google maps eg:: 
         Holcomb Valley Campground, California
+
+    Pusher uses google geo-coding to look up a lat/lon coordinate for
+    the given name. This lat/lon is then associated with all photos
+    not geotagged via EXIF.
     
 megapixels.txt [flickr] megapixels_fb [fb]
     The megapixels files (megapixel.txt for flickr and megapixel_fb.txt 
@@ -176,4 +187,29 @@ sets.txt [flickr,fb]
         
 tags.txt [flickr]
     Flickr supports adding text tags to photos. This file should contain a
-    comma separated list of tags to apply to all photos in this directory. 
+    comma separated list of tags to apply to all photos in this directory::
+        south africa, pretoria, hatfield
+
+.title [flickr,fb]
+    If jpeg has corresponding .title file, will use text in file as
+    the title. For instance if your image is loris.jpg, then 
+    loris.jpg.title will be read for the title.
+
+
+feh interfacing
+===============
+
+More to come soon. In .bashrc put this::
+    alias f='feh -B black --draw-tinted --draw-exif -G -P -Z -g 1366x768 -d -S filename --info "image-pusher.sh show %F" --action "pu add %F" --action4 "pu rm %F" --action1 ";image-pusher.sh edit-title %F"'
+
+Now one can browse images with 'f \*.jpg' and use:
+- **Enter** : To add a picture to flickr and facebook
+- **1** : To add a title to the image
+- **4** : To remove image from services
+
+Make sure scripts/image-pusher.sh is in the search path. The very 
+bottom line in feh also shows the current status of the file as viewed
+by pusher. Eg, you will see text on the image::
+    A sl.jpg (fb[A] flickr[A])
+
+This indicates this image will be added to both flickr and facebook. Remember to do a pu push sl.jpg to actually sync this image with services.
