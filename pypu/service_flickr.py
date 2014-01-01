@@ -6,7 +6,12 @@ import logging
 import json
 from pygeocoder import Geocoder
 import tempfile
-import pusher_utils
+
+try:
+    import pusher_utils
+except:
+    import pypu.pusher_utils as pusher_utils
+
 
 api_key = '8792333a5c26b561ccff7981cfb80e81'
 api_secret='b186204612137f1f'

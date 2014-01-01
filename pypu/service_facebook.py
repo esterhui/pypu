@@ -1,5 +1,9 @@
 import facebook
-import facebook_login
+try:
+    import facebook_login
+except:
+    import pypu.facebook_login as facebook_login
+
 import sys
 import os
 import socket
@@ -9,7 +13,10 @@ from pygeocoder import Geocoder
 import exifread
 import tempfile
 
-import pusher_utils
+try:
+    import pusher_utils
+except:
+    import pypu.pusher_utils as pusher_utils
 
 USER_ID = "me" # Will use user we are authenticated as
 
