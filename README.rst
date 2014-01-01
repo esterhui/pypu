@@ -20,14 +20,8 @@ Easiest is to do a pip install::
 
     pip install pypu
 
-Make sure to setup an alias to the cli utility using some version of python2::
 
-    alias pu="python2 /usr/lib/python2.7/site-packages/pypu/pushercli.py"
-
-Another method is to download the source and setup an alias::
-
-    alias pu='$HOME/src/pypu/pushercli.py'
-
+The script 'pu' should be install in /usr/bin or similar location.
 
 Website
 =======
@@ -49,13 +43,7 @@ premission.
 Example Usage - Adding an album
 ===============================
 
-First let's use 'pu' to call pushercli.py (put this in ~/.bashrc)
-
-::
-
-    alias pu='$HOME/src/pusher/pushercli.py'
-
-Now, let's say you want to add a few photos to flickr:
+Let's say you want to add a few photos to flickr:
 
 ::
 
@@ -270,6 +258,9 @@ TIPS
 TODO
 =====
 
+- Add support for:
+    - youtube
+    - google+
 - Add command to print supported services
 - Add wordpress documentation
 - Read flickr user name from config file

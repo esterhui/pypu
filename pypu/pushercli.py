@@ -1,17 +1,24 @@
 #!/usr/bin/env python2
 import os
 import argparse
-import pusher
+
+try:
+    import pypu.pusher as pusher
+except ImportError:
+    import pusher
+
 import logging
 import glob
 
-parser=argparse.ArgumentParser(description='Upload stuff to flickr and wordpress')
+VERSION='0.1.4'
+
+parser=argparse.ArgumentParser(description='Upload stuff to flickr and wordpress (%s)'%(VERSION),version=VERSION)
 parser.add_argument("action", help="Action flag: st,pull,push,add,rm")
 parser.add_argument('files', metavar='file', type=str, nargs='+',
     help="Directory or file list to operate on")
-parser.add_argument('-v','--verbose',help="Verbose debug output",\
+parser.add_argument('-vv','--verbose',help="Verbose debug output",\
         action="store_true")
-parser.add_argument('-vv','--debug',help="Very Verbose debug output",\
+parser.add_argument('-d','--debug',help="Very Verbose debug output",\
         action="store_true")
 parser.add_argument('-f','--force',help="Attempts to force operation",\
         action="store_true")

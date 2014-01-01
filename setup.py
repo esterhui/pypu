@@ -1,9 +1,11 @@
+from pypu.pushercli import VERSION
 from distutils.core import setup
 
 setup(
     name='pypu',
-    version='0.1.2',
+    version=VERSION,
     packages=['pypu',],
+    scripts=["bin/pu"],
     author='Stephan Esterhuizen',
     author_email='esterhui@gmail.com',
     url='http://github.com/esterhui/pypu',
