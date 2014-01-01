@@ -37,7 +37,8 @@ class service_facebook:
         self.FB_CONFIG_FILES=[SET_FILE,MEGAPIXEL_FILE]
         self.FB_META_EXTENSIONS=['.title']
         # All MEDIA_EXTENSIONS will be uploaded to fb
-        self.FB_MEDIA_EXTENSIONS=['.jpg','.mov','.avi','.mp4']
+        #self.FB_MEDIA_EXTENSIONS=['.jpg','.mov','.avi','.mp4']
+        self.FB_MEDIA_EXTENSIONS=['.jpg'] # Videos not supported yet
         self.DB_FILE=".facebookdb"
         self.connected_to_fb=False
 

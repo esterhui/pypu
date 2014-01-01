@@ -5,6 +5,7 @@ import os
 import json
 import glob
 import hashlib
+from itertools import chain
 
 import servicemanager
 
@@ -160,14 +161,25 @@ class status:
         # we ensure this happens
         if service is None or service is 'flickr':
             sobj=self.sman.GetServiceObj('flickr')
-            files_hack=[]
+            files_hack_media=[]
+            files_hack_config=[]
+            files_hack_other=[]
             for filename in files_that_exist:
                 if sobj._isMediaFile(filename):
-                    files_hack.append(filename)
-            for filename in files_that_exist:
-                if sobj._isConfigFile(filename):
-                    files_hack.append(filename)
-            files_that_exist=files_hack
+                    files_hack_media.append(filename)
+                elif sobj._isConfigFile(filename):
+                    files_hack_config.append(filename)
+                else:
+                    files_hack_other.append(filename)
+
+
+            #Now organize as we'd like it, media first, then config, then others
+            files_that_exist=[]
+            files_that_exist.append(files_hack_media)
+            files_that_exist.append(files_hack_config)
+            files_that_exist.append(files_hack_other)
+            # Flatten list
+            files_that_exist=list(chain.from_iterable(files_that_exist))
 
         for fn in files_that_exist:
             if status==self.ST_ADDED:
@@ -387,6 +399,14 @@ class status:
         except IOError:
             logger.warning("Pusher DB not found")
             db={}
+
+        # Hack to read old DB format where key 'services' didn't exist
+        # We only supported flickr back then, so let's assume this
+        for fn in db:
+            if not db[fn].has_key('services'):
+                db[fn]['services']={}
+                db[fn]['services']['flickr']={}
+                db[fn]['services']['flickr']['status']=db[fn]['status']
 
         return db
 

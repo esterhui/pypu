@@ -278,3 +278,4 @@ TODO
 - Explain how scripts/build_json_from_flickr.py works 
 - Add something like *pu flickr init* to generate skeleton metadata files
 - Document how to add new services
+- Progress bar for large files
