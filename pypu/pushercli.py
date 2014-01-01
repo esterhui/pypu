@@ -10,7 +10,7 @@ except ImportError:
 import logging
 import glob
 
-VERSION='0.1.6dev'
+VERSION='0.1.6'
 
 parser=argparse.ArgumentParser(description='Upload stuff to flickr and wordpress (%s)'%(VERSION),version=VERSION)
 parser.add_argument("action", help="Action flag: st,pull,push,add,rm")
