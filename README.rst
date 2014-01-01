@@ -25,12 +25,13 @@ The script 'pu' should be installed in /usr/bin or similar location.
 Dependencies
 ============
 
-- facebook (can use pip install)
-- flickrapi (can use pip install)
-- wordpress_xmlrpc
-- pygeocoder (can use pip install)
-- exifread (can use pip install)
+Most of these dependencies can be installed with pip install:
 
+- facebook
+- flickrapi 
+- wordpress_xmlrpc
+- pygeocoder 
+- exifread 
 - PIL ('pillow' package in gentoo)
 
 Website
