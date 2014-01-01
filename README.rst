@@ -22,6 +22,14 @@ Easiest is to do a pip install::
 
 The script 'pu' should be installed in /usr/bin or similar location.
 
+Dependencies
+============
+
+- flickrapi (can use pip install)
+- pygeocoder (can use pip install)
+- exifread (can use pip install)
+- PIL ('pillow' package in gentoo)
+
 Website
 =======
 
