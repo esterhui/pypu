@@ -3,12 +3,12 @@ pypu - python pusher
 =====================
 
 This command line interface (CLI) tool provides an easy way to manage photo
-albums and wordpress blogs via the command line. It currently has interface to
-flickr, facebook, and wordpress.
+albums and wordpress blogs. It currently has interface to flickr, facebook, and
+wordpress.
 
 The philosophy is to make this software similar to svn or git, where one 
 adds/removes media files locally, then does a 'push' to synchronize with 
-remote server, where this 'server' is facebook, flickr, wordpress.
+remote server, where this 'server' is facebook, flickr, wordpress. 
 
 This software can be interfaced easily with an image program like 'feh' to
 graphically add photos to flickr/facebook.
@@ -20,8 +20,7 @@ Easiest is to do a pip install::
 
     pip install pypu
 
-
-The script 'pu' should be install in /usr/bin or similar location.
+The script 'pu' should be installed in /usr/bin or similar location.
 
 Website
 =======
@@ -35,7 +34,7 @@ The pypu app is registered with both facebook and flickr. Before pypu can
 access your photo albums, you need to authorize the app to do so. The very
 first time a facebook or flickr login is required, the script will open a tab in
 your browser, and interact with either facebook or flickr to grant this
-premission. 
+permission. 
 
 - Facebook grants a 2 month token, thus this process only needs to be performed every two months
 - Flickr grants a authorization token until it is revoked by the user
@@ -90,7 +89,7 @@ Now, let's actually push this stuff to flickr (upload to flickr):
     S sl2.jpg (flickr[S])
     S tags.txt (flickr[S])
 
-The 'S' indicates that the data has been synched with the service (flickr). The
+The 'S' indicates that the data has been synchronized with the service (flickr). The
 txt files only contain meta data and is used to update things like the 'photo
 sets' the jpegs belong to, geotagging information (if no lat/lon in EXIF).
 
@@ -265,7 +264,5 @@ TODO
 - Add wordpress documentation
 - Read flickr user name from config file
 - Explain how scripts/build_json_from_flickr.py works 
-- Add feh screenshot with pusher overlay
 - Add something like *pu flickr init* to generate skeleton metadata files
 - Document how to add new services
-- Add Installation section
