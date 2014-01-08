@@ -17,6 +17,9 @@ class servicemanager:
             if sobj.KnowsFile(filename) :
                 objlist.append(sobj)
 
+        if len(objlist)==0:
+            return None
+
         return objlist
 
     def GetServiceObj(self,servicename):
