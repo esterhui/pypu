@@ -20,7 +20,7 @@ Easiest is to do a pip install::
 
     pip install pypu
 
-The script 'pu' should be installed in /usr/bin or similar location.
+The script 'pypu' should be installed in /usr/bin or similar location.
 
 Dependencies
 ============
@@ -68,7 +68,7 @@ let's try adding this whole directory
 
 ::
 
-    > pu -sflickr add *
+    > pypu -sflickr add *
     A location.txt (flickr[A])
     A megapixels.txt (flickr[A])
     A sets.txt (flickr[A])
@@ -87,7 +87,7 @@ Now, let's actually push this stuff to flickr (upload to flickr):
 
 ::
 
-    > pu push .
+    > pypu push .
     sl.jpg - Uploading to flickr, tags["slow loris" "funny animal" "test"] size=0.5 MP
     sl2.jpg - Uploading to flickr, tags["slow loris" "funny animal" "test"] size=0.5 MP
     location.txt - Updating geotag information
@@ -125,7 +125,7 @@ md5 checksum of the file has changed (as well as the modification time):
 
 ::
 
-    > pu st .
+    > pypu st .
     S location.txt (flickr[S])
     S megapixels.txt (flickr[S])
     M sets.txt (flickr[M])
@@ -138,7 +138,7 @@ be re-synchronized. Tell pusher to update photo albums (sets):
 
 ::
 
-    > pu push .
+    > pypu push .
     sets.txt - Updating sets
     S sets.txt (flickr[S])
 
@@ -154,7 +154,7 @@ Ok, let's clean up this test album. Do this by removing all files from pusher.
 
 ::
 
-    > pu rm *
+    > pypu rm *
     D location.txt (flickr[D])
     D megapixels.txt (flickr[D])
     D sets.txt (flickr[D])
@@ -169,7 +169,7 @@ Now issue a push command to actually apply the action:
 
 ::
     
-    > pu push .
+    > pypu push .
     sl.jpg - Deleting from flickr [local copy intact]
     sl2.jpg - Deleting from flickr [local copy intact]
     ? location.txt
@@ -234,7 +234,7 @@ feh interfacing
 
 Feh allows one to run scripts on the current image being viewed (like adding the image to flickr), and even read data from stdin to display on the image. We can take advantage of this to seamlessly integrate feh and pusher::
 
-    alias f='feh -B black --draw-tinted --draw-exif -G -P -Z -g 1366x768 -d -S filename --info "image-pusher.sh show %F" --action "pu add %F" --action4 "pu rm %F" --action1 ";image-pusher.sh edit-title %F"'
+    alias f='feh -B black --draw-tinted --draw-exif -G -P -Z -g 1366x768 -d -S filename --info "image-pusher.sh show %F" --action "pypu add %F" --action4 "pypu rm %F" --action1 ";image-pusher.sh edit-title %F"'
 
 Now one can browse images with 'f \*.jpg' and use:
 
@@ -247,7 +247,7 @@ bottom line in feh also shows the current status of the file as viewed
 by pusher. Eg, you will see text on the image::
     A sl.jpg (fb[A] flickr[A])
 
-This indicates this image will be added to both flickr and facebook. Remember to do a pu push sl.jpg to actually sync this image with services.
+This indicates this image will be added to both flickr and facebook. Remember to do a pypu push sl.jpg to actually sync this image with services.
 
 Here is an example screenshot:
 
@@ -276,6 +276,8 @@ TODO
 - Add wordpress documentation
 - Read flickr user name from config file
 - Explain how scripts/build_json_from_flickr.py works 
-- Add something like *pu flickr init* to generate skeleton metadata files
+- Add something like *pypu flickr init* to generate skeleton metadata files
 - Document how to add new services
 - Progress bar for large files
+- Add N/M photos uploaded
+- Supress exif warnings (enable with flag)

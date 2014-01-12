@@ -4,7 +4,7 @@
 # SXE hacked
 # Obtained from https://github.com/derf/feh/wiki/Tagging-images-with-Feh#image-metadatash
 # To be used by feh as an external action eg.:
-# alias f='feh -B black --draw-tinted --draw-exif -G -P -Z -g 1366x768 -d -S filename --info "image-pusher.sh show %f" --action "pu add %f" --action4 "pu rm %f" --action1 ";image-pusher.sh edit-title %f"'
+# alias f='feh -B black --draw-tinted --draw-exif -G -P -Z -g 1366x768 -d -S filename --info "image-pusher.sh show %f" --action "pypu add %f" --action4 "pypu rm %f" --action1 ";image-pusher.sh edit-title %f"'
 
 if [ $# -lt 2 ]
 then
@@ -36,8 +36,8 @@ then
     curTitle=$(cat ${file}.title 2>/dev/null)
     if [ -z "$curTitle" ] 
     then
-        echo "                                                                                      `pu st \"$file\"`"
+        echo "                                                                                      `pypu st \"$file\"`"
     else
-        echo "                                                                                      `pu st \"$file\"` Title: [$curTitle] "
+        echo "                                                                                      `pypu st \"$file\"` Title: [$curTitle] "
     fi
 fi
