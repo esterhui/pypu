@@ -23,7 +23,7 @@ SOCKET_TIMEOUT_SECONDS=120 # Timeout for urllib2 http post
 LOCATION_FILE='location.txt' # If no EXIF GPS data, use this to geootag
 SET_FILE='sets.txt' # Sets photos belong to in directory
 TAG_FILE='tags.txt' # List of tags for photos in directory
-MEGAPIXEL_FILE='megapixels.txt' # How many Mega Pixels to upload files as
+MEGAPIXEL_FILE='megapixels_flickr.txt' # How many Mega Pixels to upload files as
 
 logger=logging.getLogger('pusher')
 

@@ -485,10 +485,3 @@ class status:
             dfiles[fn]=d
 
         return dfiles
-        
-        # Do hash if we have no DB
-        #if not db:
-            #logger.info("Hashing %d files"%(len(flickr_files)))
-            #for d in flickr_files:
-                #d['hash']=hashfile(os.path.join(pushdir,d['filename']))
-

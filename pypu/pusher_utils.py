@@ -36,35 +36,11 @@ def resize_image(fullfile,fullfile_resized,_megapixels):
     imageresize.save(fullfile_resized, 'JPEG')
 
     # ---- Transfer over EXIF info ----
-    try:
-        update_exif_GEXIV2(fullfile,fullfile_resized)
-    except:
-        logger.debug('GEXIV2 exif update failed, trying pyexiv2')
-        update_exif_pyexiv2(fullfile,fullfile_resized)
+    if not update_exif_GEXIV2(fullfile,fullfile_resized):
+        return False
+    
 
     return True
-
-def update_exif_pyexiv2(oldfile, newfile):
-    import pyexiv2
-
-    # Figure out dimensions
-    imgresize = Image.open(newfile)
-    
-    # copy EXIF data
-    oldmeta = pyexiv2.ImageMetadata(oldfile)
-    oldmeta.read()
-
-    newmeta = pyexiv2.ImageMetadata(newfile)
-    newmeta.read()
-    # read metadata of the new file
-
-    oldmeta.copy(newmeta)
-
-    # set EXIF image size info to resized size
-    newmeta["Exif.Photo.PixelXDimension"] = (imgresize.size[0])
-    newmeta["Exif.Photo.PixelYDimension"] = (imgresize.size[1])
-
-    newmeta.write()
 
 def update_exif_GEXIV2(oldfile,newfile):
     """Transfers oldfile's exif to newfile's exif and
@@ -72,7 +48,16 @@ def update_exif_GEXIV2(oldfile,newfile):
 
     # Requires gexiv2 and pygobject package in gentoo 
     # (USE=introspection)
-    from gi.repository import GExiv2 
+    try:
+        from gi.repository import GExiv2 
+    except:
+        print("Couldn't import GExiv2")
+        print("Are you sure you have GExiv2 installed?")
+        print("See this page: http://goo.gl/0bhDGx")
+        print("For gentoo, emerge media-libs/gexiv2 with introspection USE flag")
+        return False
+        
+
 
     # exif of orginal image
     exif = GExiv2.Metadata(oldfile)
@@ -94,6 +79,8 @@ def update_exif_GEXIV2(oldfile,newfile):
     # Error is: gi._glib.GError: Unsupported data area offset type
     newExif.save_file()
 
+    return True
+
 def resize_compute_width_height(fullfile,_megapixels):
     """Given image file and desired megapixels,
     computes the new width and height"""
@@ -105,9 +92,11 @@ def resize_compute_width_height(fullfile,_megapixels):
     scale=sqrt(_megapixels/float(current_megapixels))
 
     logger.debug('A resize scale would be %f'%(scale))
-    # Can't make bigger, return false
+    # Can't make bigger, return original
     if scale>= 1.0:
-        return None,None
+        logger.warning('Image is %0.1f MP, trying to scale to %0.1f MP - just using original!',
+                current_megapixels,_megapixels);
+        return width,height
 
     new_width=int(width*scale)
     new_height=int(height*scale)

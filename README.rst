@@ -2,6 +2,8 @@
 pypu - python pusher
 =====================
 
+See github repository: http://github.com/esterhui/pypu
+
 This command line interface (CLI) tool provides an easy way to manage photo
 albums and wordpress blogs. It currently has interface to flickr, facebook, and
 wordpress.
@@ -25,14 +27,25 @@ The script 'pypu' should be installed in /usr/bin or similar location.
 Dependencies
 ============
 
-Most of these dependencies can be installed with pip install:
+These dependencies should be pulled in when installing pypu
 
-- facebook
+- facebook_sdk
 - flickrapi 
 - wordpress_xmlrpc
 - pygeocoder 
 - exifread 
 - PIL ('pillow' package in gentoo)
+
+
+GExiv2 - For rewriting exif information after image resize
+----------------------------------------------------------
+
+Note, there is no pip install for this package, you must install
+the proper libexiv2 library. See this page for details: http://goo.gl/0bhDGx
+
+On **gentoo** Linux, emerge media-libs/gexiv2 with the *introspection* USE flag.
+If this isn't installed, images will not be resized, original version will
+be uploaded
 
 Website
 =======
@@ -49,6 +62,10 @@ your browser, and interact with either facebook or flickr to grant this
 permission. 
 
 - Facebook grants a 2 month token, thus this process only needs to be performed every two months
+  If you want to change who can see pypu posts, change privacy settings here: 
+  
+    https://www.facebook.com/settings/?tab=applications
+
 - Flickr grants a authorization token until it is revoked by the user
 
 Example Usage - Adding an album
@@ -70,7 +87,7 @@ let's try adding this whole directory
 
     > pypu -sflickr add *
     A location.txt (flickr[A])
-    A megapixels.txt (flickr[A])
+    A megapixels_flickr.txt (flickr[A])
     A sets.txt (flickr[A])
     A sl.jpg (flickr[A])
     A sl2.jpg (flickr[A])
@@ -91,11 +108,11 @@ Now, let's actually push this stuff to flickr (upload to flickr):
     sl.jpg - Uploading to flickr, tags["slow loris" "funny animal" "test"] size=0.5 MP
     sl2.jpg - Uploading to flickr, tags["slow loris" "funny animal" "test"] size=0.5 MP
     location.txt - Updating geotag information
-    megapixels.txt - Updating photo size
+    megapixels_flickr.txt - Updating photo size
     sets.txt - Updating sets
     tags.txt - Updating tags
     S location.txt (flickr[S])
-    S megapixels.txt (flickr[S])
+    S megapixels_flickr.txt (flickr[S])
     S sets.txt (flickr[S])
     S sl.jpg (flickr[S])
     S sl2.jpg (flickr[S])
@@ -127,7 +144,7 @@ md5 checksum of the file has changed (as well as the modification time):
 
     > pypu st .
     S location.txt (flickr[S])
-    S megapixels.txt (flickr[S])
+    S megapixels_flickr.txt (flickr[S])
     M sets.txt (flickr[M])
     S sl.jpg (flickr[M])
     S sl2.jpg (flickr[S])
@@ -156,7 +173,7 @@ Ok, let's clean up this test album. Do this by removing all files from pusher.
 
     > pypu rm *
     D location.txt (flickr[D])
-    D megapixels.txt (flickr[D])
+    D megapixels_flickr.txt (flickr[D])
     D sets.txt (flickr[D])
     D sl.jpg (flickr[D])
     D sl2.jpg (flickr[D])
@@ -173,7 +190,7 @@ Now issue a push command to actually apply the action:
     sl.jpg - Deleting from flickr [local copy intact]
     sl2.jpg - Deleting from flickr [local copy intact]
     ? location.txt
-    ? megapixels.txt
+    ? megapixels_flickr.txt
     ? sets.txt
     ? sl.jpg
     ? sl2.jpg
@@ -185,11 +202,17 @@ album as well as all meta files.
 Supported services
 ==================
 
+To print out all supported services, type
+
+::
+    pypu services list
+
 Currently this script supports uploading/deleting stuff via:
 
 - Facebook (fb)
 - Flickr (flickr)
 - Wordpress (wp)
+
 
 Config files
 ============
@@ -204,8 +227,8 @@ location.txt [flickr]
     the given name. This lat/lon is then associated with all photos
     not geotagged via EXIF.
     
-megapixels.txt [flickr] megapixels_fb [fb]
-    The megapixels files (megapixel.txt for flickr and megapixel_fb.txt 
+megapixels_flickr.txt [flickr] megapixels_fb [fb]
+    The megapixels files (megapixel_flickr.txt for flickr and megapixel_fb.txt 
     for facebook) is used to resize images to the specified megapixels.
     If the image is smaller than the specified megapixels, original image
     size will be used. To resize to 2.0 megapixels, this file will contain::
@@ -272,7 +295,6 @@ TODO
 - Add support for:
     - youtube
     - google+
-- Add command to print supported services
 - Add wordpress documentation
 - Read flickr user name from config file
 - Explain how scripts/build_json_from_flickr.py works 
